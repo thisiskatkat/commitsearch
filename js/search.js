@@ -8,7 +8,7 @@
 //AUTOCOMPLETE user and repository
 
 $(function() {
-
+  $.support.cors = true; //fix IE issues with cross domain calls
   $("#owner").autocomplete({
     minLength: 3,
     source: function(request, response) {
@@ -98,7 +98,7 @@ $(function() { // document ready
   $('#search').submit(function() {
 
       //get values
-      var repoName = $('#repo')[0].value, ownerName = $('#owner')[0].value, loader = $('#loader');
+      var repoName = $('#repo').value, ownerName = $('#owner').value, loader = $('#loader');
 
       loader.css('display','inline-block');
 
