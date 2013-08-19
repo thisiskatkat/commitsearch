@@ -1,14 +1,37 @@
 //this file contains:
-//1. autocomplete user and repository names
-//2. process search
-//3. initiate search
+// IE < 10 input placeholders
+// autocomplete user and repository names
+// process search
+// initiate search
 
 
-
-//AUTOCOMPLETE user and repository
 
 $(function() {
   $.support.cors = true; //fix IE issues with cross domain calls
+
+  //input placeholders fix, mostly for IE < 10
+  $('[placeholder]').focus(function() {
+    var input = $(this);
+    if (input.val() == input.attr('placeholder')) {
+      input.val('');
+      input.removeClass('placeholder');
+    }
+  }).blur(function() {
+    var input = $(this);
+    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+      input.addClass('placeholder');
+      input.val(input.attr('placeholder'));
+    }
+  }).blur().parents('form').submit(function() {
+    $(this).find('[placeholder]').each(function() {
+      var input = $(this);
+      if (input.val() == input.attr('placeholder')) {
+        input.val('');
+      }
+    })
+  });
+
+  //AUTOCOMPLETE user and repository
   $("#owner").autocomplete({
     minLength: 3,
     source: function(request, response) {
@@ -93,12 +116,12 @@ function processSearch(json) {
 }
 
 // initiate search
-$(function() { // document ready
+$(function() { 
 
   $('#search').submit(function() {
 
       //get values
-      var repoName = $('#repo').value, ownerName = $('#owner').value, loader = $('#loader');
+      var repoName = $('#repo')[0].value, ownerName = $('#owner')[0].value, loader = $('#loader');
 
       loader.css('display','inline-block');
 

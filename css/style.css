@@ -884,3 +884,7 @@ button.submit-search:active {
 	border: 0;
 }
 
+/*cross browser fixes*/
+.placeholder {
+	color:#999;
+}
